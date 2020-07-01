@@ -35,6 +35,7 @@ export class AppHome implements ComponentInterface {
         <ion-header>
           <ion-toolbar color="primary">
             <ion-select
+              interface="popover"
               slot="start"
               value={this.language}
               onIonChange={({ detail }) => monaco.editor.setModelLanguage(this.monacoEditor.getModel(), this.language = detail.value)}
