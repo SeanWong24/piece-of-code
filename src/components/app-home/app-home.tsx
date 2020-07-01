@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, h, Prop } from '@stencil/core';
+import { Component, ComponentInterface, Host, h, Prop, State } from '@stencil/core';
 import monaco from '@timkendrick/monaco-editor';
 
 @Component({
@@ -9,16 +9,21 @@ export class AppHome implements ComponentInterface {
 
   private editorContainerElement: HTMLElement;
   private monacoEditor: monaco.editor.IStandaloneCodeEditor;
+  private language: string;
+  private data: string;
 
-  @Prop() data: string;
+  constructor() {
+    const [language, data] = document.URL.split('#/')[1]?.split('/') || [];
+    this.language = language || 'typescript';
+    this.data = data;
+  }
 
   componentDidLoad() {
-    const base64Data = document.URL.split('#/')[1];
     this.monacoEditor = monaco.editor.create(
       this.editorContainerElement,
       {
-        value: atob(base64Data || ''),
-        language: 'typescript',
+        value: atob(this.data || ''),
+        language: this.language,
         automaticLayout: true
       }
     );
@@ -31,8 +36,8 @@ export class AppHome implements ComponentInterface {
           <ion-toolbar color="primary">
             <ion-select
               slot="start"
-              value="typescript"
-              onIonChange={({ detail }) => monaco.editor.setModelLanguage(this.monacoEditor.getModel(), detail.value)}
+              value={this.language}
+              onIonChange={({ detail }) => monaco.editor.setModelLanguage(this.monacoEditor.getModel(), this.language = detail.value)}
             >
               {
                 monaco.languages.getLanguages().map(language =>
@@ -42,7 +47,7 @@ export class AppHome implements ComponentInterface {
             </ion-select>
             <ion-buttons slot="end">
               <ion-button onClick={() => {
-                const url = `${document.URL.split('#')[0]}#/${btoa(this.monacoEditor.getValue())}`;
+                const url = `${document.URL.split('#')[0]}#/${this.language}/${btoa(this.monacoEditor.getValue())}`;
                 if (prompt('Copying the URL', url)) {
                   navigator.clipboard?.writeText(url);
                 }

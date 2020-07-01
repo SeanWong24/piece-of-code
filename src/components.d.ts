@@ -7,7 +7,6 @@
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AppHome {
-        "data": string;
     }
     interface AppRoot {
     }
@@ -32,7 +31,6 @@ declare global {
 }
 declare namespace LocalJSX {
     interface AppHome {
-        "data"?: string;
     }
     interface AppRoot {
     }
