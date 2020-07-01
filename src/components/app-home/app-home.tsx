@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, h } from '@stencil/core';
+import { Component, ComponentInterface, Host, h, Prop } from '@stencil/core';
 import monaco from '@timkendrick/monaco-editor';
 
 @Component({
@@ -9,20 +9,15 @@ export class AppHome implements ComponentInterface {
 
   private editorContainerElement: HTMLElement;
   private monacoEditor: monaco.editor.IStandaloneCodeEditor;
-  private language: string;
-  private data: string;
 
-  constructor() {
-    const [language, data] = document.URL.split('#/')[1]?.split('/') || [];
-    this.language = language || 'typescript';
-    this.data = data;
-  }
+  @Prop() language: string;
+  @Prop() data: string;
 
   componentDidLoad() {
     this.monacoEditor = monaco.editor.create(
       this.editorContainerElement,
       {
-        value: atob(this.data || ''),
+        value: atob(this.data?.replace(/-/g, '/') || ''),
         language: this.language,
         automaticLayout: true
       }
@@ -48,7 +43,7 @@ export class AppHome implements ComponentInterface {
             </ion-select>
             <ion-buttons slot="end">
               <ion-button onClick={() => {
-                const url = `${document.URL.split('#')[0]}#/${this.language}/${btoa(this.monacoEditor.getValue())}`;
+                const url = `${document.URL.split('#')[0]}#/${this.language}/${btoa(this.monacoEditor.getValue()).replace(/\//g, '-')}`;
                 if (prompt('Copying the URL', url)) {
                   navigator.clipboard?.writeText(url);
                 }
