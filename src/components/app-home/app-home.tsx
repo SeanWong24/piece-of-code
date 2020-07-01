@@ -1,4 +1,5 @@
 import { Component, ComponentInterface, Host, h, Prop } from '@stencil/core';
+import monaco from '@timkendrick/monaco-editor';
 
 @Component({
   tag: 'app-home',
@@ -6,9 +7,23 @@ import { Component, ComponentInterface, Host, h, Prop } from '@stencil/core';
 })
 export class AppHome implements ComponentInterface {
 
-  private textareaElement: HTMLTextAreaElement;
+  private editorContainerElement: HTMLElement;
+  private monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
   @Prop() data: string;
+
+  componentDidLoad() {
+    setTimeout(() => {
+      this.monacoEditor = monaco.editor.create(
+        this.editorContainerElement,
+        {
+          value: atob(this.data || ''),
+          language: 'typescript',
+          automaticLayout: true
+        }
+      );
+    }, 100);
+  }
 
   render() {
     return (
@@ -17,13 +32,17 @@ export class AppHome implements ComponentInterface {
           <ion-toolbar color="primary">
             <ion-title>Share Code</ion-title>
             <ion-buttons slot="end">
-              <ion-button onClick={() => prompt('Showing URL', `${document.URL.split('#')[0]}#/${btoa(this.textareaElement.value)}`)}>Get URL</ion-button>
+              <ion-button onClick={() => {
+                const url = `${document.URL.split('#')[0]}#/${btoa(this.monacoEditor.getValue())}`;
+                if (prompt('Copying the URL', url)) {
+                  navigator.clipboard?.writeText(url);
+                }
+              }}>Get URL</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
 
-        <ion-content scrollY={false}>
-          <textarea ref={el => this.textareaElement = el} style={{ height: '100%', width: '100%' }} value={atob(this.data || '')}></textarea>
+        <ion-content scrollY={false} ref={el => this.editorContainerElement = el}>
         </ion-content>
       </Host>
     );
