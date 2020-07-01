@@ -13,16 +13,15 @@ export class AppHome implements ComponentInterface {
   @Prop() data: string;
 
   componentDidLoad() {
-    setTimeout(() => {
-      this.monacoEditor = monaco.editor.create(
-        this.editorContainerElement,
-        {
-          value: atob(this.data || ''),
-          language: 'typescript',
-          automaticLayout: true
-        }
-      );
-    }, 100);
+    const base64Data = document.URL.split('#/')[1];
+    this.monacoEditor = monaco.editor.create(
+      this.editorContainerElement,
+      {
+        value: atob(base64Data || ''),
+        language: 'typescript',
+        automaticLayout: true
+      }
+    );
   }
 
   render() {
