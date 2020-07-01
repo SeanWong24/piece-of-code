@@ -44,10 +44,8 @@ export class AppHome implements ComponentInterface {
             <ion-buttons slot="end">
               <ion-button onClick={() => {
                 const url = `${document.URL.split('#')[0]}#/${this.language}/${btoa(this.monacoEditor.getValue()).replace(/\//g, '-')}`;
-                if (prompt('Copying the URL', url)) {
-                  navigator.clipboard?.writeText(url);
-                }
-              }}>Get URL</ion-button>
+                window.location.href = url;
+              }}>Apply URL</ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
