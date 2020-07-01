@@ -10,7 +10,7 @@ export class AppHome implements ComponentInterface {
   private editorContainerElement: HTMLElement;
   private monacoEditor: monaco.editor.IStandaloneCodeEditor;
 
-  @Prop() language: string;
+  @Prop() language: string = 'javascript';
   @Prop() data: string;
 
   componentDidLoad() {
