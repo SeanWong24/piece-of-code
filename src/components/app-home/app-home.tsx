@@ -29,7 +29,17 @@ export class AppHome implements ComponentInterface {
       <Host>
         <ion-header>
           <ion-toolbar color="primary">
-            <ion-title>Share Code</ion-title>
+            <ion-select
+              slot="start"
+              value="typescript"
+              onIonChange={({ detail }) => monaco.editor.setModelLanguage(this.monacoEditor.getModel(), detail.value)}
+            >
+              {
+                monaco.languages.getLanguages().map(language =>
+                  <ion-select-option value={language.id}>{language.aliases[0]}</ion-select-option>
+                )
+              }
+            </ion-select>
             <ion-buttons slot="end">
               <ion-button onClick={() => {
                 const url = `${document.URL.split('#')[0]}#/${btoa(this.monacoEditor.getValue())}`;
