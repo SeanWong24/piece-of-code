@@ -1,7 +1,7 @@
 {
   "name": "Share Code",
   "short_name": "ShareCode",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "icons": [{
     "src": "assets/icon/icon192.png",
