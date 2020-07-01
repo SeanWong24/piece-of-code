@@ -23,7 +23,7 @@ export class AppHome implements ComponentInterface {
         </ion-header>
 
         <ion-content scrollY={false}>
-          <textarea ref={el => this.textareaElement = el} style={{ height: '100%', width: '100%' }} value={atob(this.data)}></textarea>
+          <textarea ref={el => this.textareaElement = el} style={{ height: '100%', width: '100%' }} value={atob(this.data || '')}></textarea>
         </ion-content>
       </Host>
     );
