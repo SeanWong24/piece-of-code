@@ -1,4 +1,4 @@
-import { Component, ComponentInterface, Host, h, Prop, State } from '@stencil/core';
+import { Component, ComponentInterface, Host, h } from '@stencil/core';
 import monaco from '@timkendrick/monaco-editor';
 
 @Component({
