@@ -1,6 +1,6 @@
 {
-  "name": "share-code",
-  "short_name": "share-code",
+  "name": "Share Code",
+  "short_name": "ShareCode",
   "start_url": "/",
   "display": "standalone",
   "icons": [{
