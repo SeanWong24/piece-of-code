@@ -16,9 +16,11 @@
   },
   "devDependencies": {
     "@ionic/core": "^5.0.7",
-    "@stencil/core": "^1.12.2"
+    "@stencil/core": "^1.12.2",
+    "@types/pako": "^1.0.1"
   },
   "dependencies": {
-    "@timkendrick/monaco-editor": "0.0.9"
+    "@timkendrick/monaco-editor": "0.0.9",
+    "pako": "^1.0.11"
   }
 }
