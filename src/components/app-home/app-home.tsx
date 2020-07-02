@@ -50,13 +50,17 @@ export class AppHome implements ComponentInterface {
               }
             </ion-select>
             <ion-buttons slot="end">
-              <ion-button onClick={() => {
-                const text = this.monacoEditor.getValue();
-                const deflatedText = pako.deflate(new TextEncoder().encode(text));
-                const base64String = this.bufferToBase64(deflatedText);
-                const url = `${document.URL.split('#')[0]}#/${this.language}/${base64String.replace(/\//g, '-')}`;
-                window.location.href = url;
-              }}>Apply URL</ion-button>
+              <ion-button
+                onClick={() => {
+                  const text = this.monacoEditor.getValue();
+                  const deflatedText = pako.deflate(new TextEncoder().encode(text));
+                  const base64String = this.bufferToBase64(deflatedText);
+                  history.pushState(undefined, undefined, `#/${this.language}/${base64String.replace(/\//g, '-')}`);
+                }}
+                title="Update URL"
+              >
+                <ion-icon slot="icon-only" name="sync"></ion-icon>
+              </ion-button>
             </ion-buttons>
           </ion-toolbar>
         </ion-header>
