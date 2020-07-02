@@ -17,7 +17,7 @@ export class AppHome implements ComponentInterface {
   componentDidLoad() {
     let result = '';
     if (this.data) {
-      const encodedBuffer = this.base64ToBuffer(this.data);
+      const encodedBuffer = this.base64ToBuffer(this.data.replace(/-/g, '/'));
       const inflatedBuffer = pako.inflate(encodedBuffer);
       result = new TextDecoder('utf8').decode(inflatedBuffer);
     }
@@ -25,7 +25,7 @@ export class AppHome implements ComponentInterface {
     this.monacoEditor = monaco.editor.create(
       this.editorContainerElement,
       {
-        value: result.replace(/-/g, '/'),
+        value: result,
         language: this.language,
         automaticLayout: true
       }
