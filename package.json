@@ -1,8 +1,8 @@
 {
-  "name": "share-code",
+  "name": "piece-of-code",
   "private": true,
   "version": "0.0.1",
-  "description": "share-code",
+  "description": "piece-of-code",
   "license": "MIT",
   "files": [
     "dist/"
